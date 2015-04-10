@@ -1,0 +1,21 @@
+{
+  "name": "queue-monitor",
+  "version": "0.0.1",
+  "description": "queueMonitor Project Server",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "~4.2.0",
+    "body-parser": "~1.0.0"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "keywords": [
+    "queueMonitor",
+    "node"
+  ],
+  "license": "MIT"
+}
