@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
+var fs = require('fs');
+var moment = require('moment');
 
 var app = express();
 
@@ -39,6 +41,11 @@ app.post('/api/v1/stats', function(req, res) {
   };
 
   if(m.temp && m.humidity && m.pressure && m.deviceId){
+    fs.appendFile("data", moment().format() + '\n', function(err) {
+      if(err) return console.log(err);
+      console.log("Data updated.");
+    });
+
     msg = 'Temp is: ';
     msg += m.temp;
     res.json('OK');
