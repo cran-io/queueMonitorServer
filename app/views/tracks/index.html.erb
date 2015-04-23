@@ -1,0 +1,9 @@
+<h1>Tracks#index</h1>
+<table>
+	<% @tracks.each do |data| %>
+	<tr>
+		<td><%= data.status %></td>
+		<td><%= data.created_at %></td>
+	</tr>
+	<% end %>
+</table>
