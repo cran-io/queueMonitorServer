@@ -1,9 +1,22 @@
-<h1>Tracks#index</h1>
-<table>
-	<% @tracks.each do |data| %>
-	<tr>
-		<td><%= data.status %></td>
-		<td><%= data.created_at %></td>
-	</tr>
-	<% end %>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-3">
+			<table class="table table-striped table-hover table-responsive">
+				<thead>
+					<tr>
+						<th> Status </th>
+						<th> Posted at</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @tracks.each do |data| %>
+					<tr>
+						<td><%= data.status.to_s.upcase %></td>
+						<td><%= data.created_at.strftime("%d/%m/%Y, %H:%M:%S") %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

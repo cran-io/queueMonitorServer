@@ -4,6 +4,8 @@ class TracksController < ApplicationController
   end
 
   def create
+  	@track = Track.new(track_params)
+  	@track.save
   end
 
   private
