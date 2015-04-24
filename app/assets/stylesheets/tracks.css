@@ -6,3 +6,26 @@
 .top-margened{
 	margin-top:80px;
 }
+
+.no-padding{
+	padding:0!important;
+}
+
+.text-center{
+	text-align:center;
+}
+
+.progress-container-bordered{
+	border-right:1px solid #45B545;
+}
+
+.track-chart-head{
+	text-align:center;
+	font-size:12px;
+	border-right:1px solid #47AC47;
+	padding:0!important;
+}
+
+.table td, .table th{
+	text-align:center;
+}

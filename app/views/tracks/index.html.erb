@@ -1,22 +1,81 @@
-<div class="container">
-	<div class="row">
-		<div class="col-xs-3">
-			<table class="table table-striped table-hover table-responsive">
-				<thead>
-					<tr>
-						<th> Status </th>
-						<th> Posted at</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @tracks.each do |data| %>
-					<tr>
-						<td><%= data.status.to_s.upcase %></td>
-						<td><%= data.created_at.strftime("%d/%m/%Y, %H:%M:%S") %></td>
-					</tr>
-					<% end %>
-				</tbody>
-			</table>
+<div class="row">
+	<div class="col-xs-1 track-chart-days">
+		<div class="row">
+			<div class="col-xs-12 no-padding">
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" style="width: 0%;">
+					</div>
+				</div>
+			</div>
+			<% @days.each do |key, value|%>
+				<div class="col-xs-12 no-padding track-chart-days">
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 0%;">
+						</div>
+						<div class="text-center"><%= key %></div>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
+	<div class="col-xs-11">
+		<div class="row">
+			<div class="col-xs-12">
+			<div class="row">
+				<div class="col-xs-6 no-padding">
+					<% (0...12).each do |range|%>
+						<div class="col-xs-1 no-padding track-chart-head">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-success" style="width: 0%;">
+							  </div>
+								<%= sprintf('%02d', range).to_s+"-"+sprintf('%02d', range+1).to_s  %>
+							</div>
+						</div>
+				<% end %>
+					</div>
+				<div class="col-xs-6 no-padding text-center">
+					<% (12..23).each do |range| %>
+						<div class="col-xs-1 track-chart-head">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-success" style="width: 0%;">
+							  </div>
+								<% if range+1 != 24 %>
+									<%= "#{range}-#{range+1}" %>
+								<% else %>
+									<%= "#{range}-00" %>
+								<% end %>
+							</div>
+						</div>
+					<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<% @days.each do |key, val| %>
+					<%= render partial: 'day', locals: { day: val } %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+		<br><br><br><br><br>
+	<div class="col-xs-4 col-xs-offset-4">
+		<table class="table table-striped table-hover table-responsive">
+			<thead>
+				<th>Status</th>
+				<th>Timestamp</th>
+			</thead>
+			<tbody>
+				<% @tracks.each do |data| %>
+				<tr>
+					<td><%= data.status.to_s.upcase %></td>
+					<td><%= data.created_at.strftime("%d/%m, %H:%M:%S") %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+	
 </div>
+
+<br><br>

@@ -1,0 +1,15 @@
+<a href="#" class="hour">
+<div class="progress progress-container-bordered">
+	<% hour.each do |h|%>
+		<% if h %>
+		<div class="progress-bar progress-bar-success" style="width:<%= (100/hour.count.to_f).to_f %>%">
+
+		</div>
+		<%else %>
+		<div class="progress-bar progress-bar-empty" style="width: <%= (100/hour.count.to_f).to_f %>%">
+
+		</div>
+		<% end %>
+	<% end %>
+</div>
+</a>
