@@ -57,25 +57,8 @@
 			</div>
 		</div>
 	</div>
-
-		<br><br><br><br><br>
-	<div class="col-xs-4 col-xs-offset-4">
-		<table class="table table-striped table-hover table-responsive">
-			<thead>
-				<th>Status</th>
-				<th>Timestamp</th>
-			</thead>
-			<tbody>
-				<% @tracks.each do |data| %>
-				<tr>
-					<td><%= data.status.to_s.upcase %></td>
-					<td><%= data.created_at.strftime("%d/%m, %H:%M:%S") %></td>
-				</tr>
-				<% end %>
-			</tbody>
-		</table>
-	</div>
-	
 </div>
-
+<br>
+	<%= render partial: 'table', locals: { tracks: @tracks }%>
 <br><br>
+
