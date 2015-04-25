@@ -1,14 +1,25 @@
 <a href="#" class="hour">
 <div class="progress progress-container-bordered">
-	<% hour.each do |h|%>
-		<% if h %>
-		<div class="progress-bar progress-bar-success" style="width:<%= (100/hour.count.to_f).to_f %>%">
-
-		</div>
+	<% 
+		c = 0
+		hour.each do |key,val| 
+	 		if hour[c+1].nil?
+	 			proportion = 3600 - key
+	 		else
+	 			proportion = hour[c+1].first - key
+	 		end	
+			c += 1
+			proportion = proportion/60.0
+		%>	
+		<% if val.nil?%>
+			<div class="progress-bar progress-bar-empty" style="width:<%= (proportion*100)/60.to_f %>%">
+			</div>
+		<% elsif val %>
+			<div class="progress-bar progress-bar-success" style="width:<%= (proportion*100)/60.to_f %>%">
+			</div>
 		<%else %>
-		<div class="progress-bar progress-bar-empty" style="width: <%= (100/hour.count.to_f).to_f %>%">
-
-		</div>
+			<div class="progress-bar progress-bar-info" style="width: <%= (proportion*100)/60.to_f %>%">
+			</div>
 		<% end %>
 	<% end %>
 </div>
