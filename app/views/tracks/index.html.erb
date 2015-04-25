@@ -1,3 +1,7 @@
+<% content_for(:head) do %>
+  <%= javascript_include_tag "tracks" %>
+<% end %>
+
 <div class="row">
 	<div class="col-xs-1 track-chart-days">
 		<div class="row">
@@ -50,10 +54,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-12">
-				<% @days.each do |key, val| %>
-					<%= render partial: 'day', locals: { day: val } %>
-				<% end %>
+			<div class="col-xs-12" id="days">
+				<%= render partial: 'days', locals: { days: @days } %>
 			</div>
 		</div>
 	</div>

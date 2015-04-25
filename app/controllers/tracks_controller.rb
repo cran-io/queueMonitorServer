@@ -1,9 +1,8 @@
 class TracksController < ApplicationController
 	skip_before_action :verify_authenticity_token
+  before_action :set_chart, :only => [:index, :refresh]
+  
   def index	
-  	@tracks = Track.between Date.today-10, Date.today
-  	@days = @tracks.init_days
-  	binding.pry
   end
 
   def create
@@ -15,9 +14,19 @@ class TracksController < ApplicationController
     end
   end
 
+  def refresh
+  	respond_to do |format|
+	  	format.html {render partial: 'days', locals: { days: @days } }
+  	end
+  end
+
   private
   	def track_params
   		params.require(:track).permit(:status)
   	end
 
+  	def set_chart
+  		@tracks = Track.between Date.today-10, Date.today
+	  	@days = @tracks.init_days
+  	end
 end
