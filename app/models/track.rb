@@ -2,6 +2,8 @@ class Track
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	field :status, type: Mongoid::Boolean
+
+	validates :status, :inclusion => {:message =>"not boolean status", :in => [true, false] }, :on => :create
 	
 	scope :between, ->(begin_date, end_date){where(:created_at.gte => begin_date.to_datetime, :created_at.lte => end_date.to_datetime.end_of_day)}
 	scope :before, ->(date){where(:created_at.lt => date.to_datetime.beginning_of_day)}
