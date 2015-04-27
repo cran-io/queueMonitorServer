@@ -3,7 +3,7 @@ class TracksController < ApplicationController
   before_action :set_chart, :only => [:index, :refresh, :refresh_head]
   
   def index	
-		@tracks = Track.between Date.today-10, Date.today
+		@tracks = Track.between(Date.today-10, Date.today).limit 10
   end
 
   def create
