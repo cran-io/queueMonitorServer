@@ -14,7 +14,7 @@ class Track
 		previous_days = self.before begin_date
 		last = previous_days.empty? ? nil : previous_days.last.status
 		(begin_date..end_date).each do |date|
-		  day = Hash.new
+		  	day = Hash.new
 			self.for_this(date).each do |track|
 				time_in_seconds = track.created_at.strftime("%M").to_i*60 + track.created_at.strftime("%S").to_i
 				if day[track.created_at.strftime("%H").to_i].nil?
@@ -25,29 +25,29 @@ class Track
 			end
 			day = day.sort.to_h
 		 	24.times do |hour|
-	  		if day[hour].nil?
-	  			day.merge!({hour => {0 => last}})
-	  		else
-	  			day[hour][0] = last
-	  			day[hour] = day[hour].sort.to_h
-		  		last = day[hour].values.last
-	  		end
-	  	end
-	  	if date == Date.today
-			24.times do |hour|
-				right_now = DateTime.now
-				if hour == DateTime.now.strftime('%H').to_i
-					time_in_seconds = right_now.strftime("%M").to_i*60 + right_now.strftime("%S").to_i
-					day[hour].merge!({ time_in_seconds => nil }) 
-				end
-				if hour > DateTime.now.strftime('%H').to_i
-					day[hour] = {0 => nil}
+		  		if day[hour].nil?
+		  			day.merge!({hour => {0 => last}})
+		  		else
+		  			day[hour][0] = last
+		  			day[hour] = day[hour].sort.to_h
+			  		last = day[hour].values.last
+		  		end
+		  	end
+		  	if date == Date.today
+				24.times do |hour|
+					right_now = DateTime.now
+					if hour == DateTime.now.strftime('%H').to_i
+						time_in_seconds = right_now.strftime("%M").to_i*60 + right_now.strftime("%S").to_i
+						day[hour].merge!({ time_in_seconds => nil }) 
+					end
+					if hour > DateTime.now.strftime('%H').to_i
+						day[hour] = {0 => nil}
+					end
 				end
 			end
-		end
-		days.merge!({date.strftime("%a, %d %b")=>day.sort.to_h})
-	  end 
-	  days
+			days.merge!({date.strftime("%a, %d %b")=>day.sort.to_h})
+	  	end 
+	  	days
 	end
 
 end
