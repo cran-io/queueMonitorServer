@@ -1,0 +1,19 @@
+<div id="head">
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-2 no-padding">
+			<div class="progress">
+				<div class="progress-bar progress-bar-success" style="width: 0%;">
+				</div>
+			</div>
+		</div>
+		<% days.each do |key, value|%>
+			<div class="col-xs-10 col-xs-offset-2 no-padding track-chart-days">
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" style="width: 0%;">
+					</div>
+					<div class="text-center"><%= key %></div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

@@ -3,10 +3,6 @@
   They will automatically be included in application.css.
 */
 
-.top-margened{
-	margin-top:80px;
-}
-
 .no-padding{
 	padding:0!important;
 }
@@ -28,4 +24,8 @@
 
 .table td, .table th{
 	text-align:center;
+}
+
+.form-control[readonly] {
+	background-color:#FFFFFF!important;
 }

@@ -3,24 +3,21 @@
 <% end %>
 
 <div class="row">
-	<div class="col-xs-1 track-chart-days">
-		<div class="row">
-			<div class="col-xs-12 no-padding">
-				<div class="progress">
-					<div class="progress-bar progress-bar-success" style="width: 0%;">
-					</div>
-				</div>
-			</div>
-			<% @days.each do |key, value|%>
-				<div class="col-xs-12 no-padding track-chart-days">
-					<div class="progress">
-						<div class="progress-bar progress-bar-success" style="width: 0%;">
-						</div>
-						<div class="text-center"><%= key %></div>
-					</div>
-				</div>
-			<% end %>
+	<div class="col-xs-3 col-xs-offset-8 no-padding">
+		<div class="input-daterange input-group pull-right" id="datepicker">
+			<input type="text" class="input-sm form-control" id="start" value="<%= @begin_date.strftime("%d/%m/%Y") %>" readonly />
+			<span class="input-group-addon">a</span>
+			<input type="text" class="input-sm form-control" id="end" value="<%= @end_date.strftime("%d/%m/%Y") %>" readonly />
 		</div>
+	</div>
+	<div class="col-xs-1 no-padding">
+		<button class="btn btn-sm btn-success col-xs-11 pull-right" id="search">Filtrar</button>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-xs-1 track-chart-days">
+		<%= render partial: 'days_head', locals: { days: @days } %>
 	</div>
 	<div class="col-xs-11">
 		<div class="row">
@@ -61,6 +58,8 @@
 	</div>
 </div>
 <br>
-	<%= render partial: 'table', locals: { tracks: @tracks }%>
+	<% unless @tracks.empty? %>
+		<%= render partial: 'table', locals: { tracks: @tracks }%>
+	<% end %>
 <br><br>
 

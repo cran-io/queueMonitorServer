@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :tracks, only: [:index, :create]
   get '/refresh' => 'tracks#refresh'
+  get '/refresh_head' => 'tracks#refresh_head'
   root 'tracks#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
