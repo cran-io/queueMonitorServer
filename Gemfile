@@ -23,7 +23,7 @@ group :test do
 	gem 'shoulda-matchers'
 	gem 'mongoid-rspec'
 	gem 'database_cleaner'
-	# gem 'simplecov', :require => false
+	gem 'simplecov', :require => false
 end
 
 group :doc do 
