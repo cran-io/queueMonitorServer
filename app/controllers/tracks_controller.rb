@@ -3,7 +3,7 @@ class TracksController < ApplicationController
   before_action :set_chart, :only => [:index, :refresh, :refresh_head]
   
   def index	
-		@tracks = Track.between(Date.today-10, Date.today).limit 10
+		@tracks = Track.between(Time.zone.now.to_date-10, Time.zone.now.to_date).limit 10
   end
 
   def create
@@ -32,8 +32,8 @@ class TracksController < ApplicationController
     end
 
     def set_chart  
-      @begin_date = params[:begin_date] || Date.today-10
-      @end_date = params[:end_date] || Date.today
+      @begin_date = params[:begin_date] || Time.zone.now.to_date - 10
+      @end_date = params[:end_date] || Time.zone.now.to_date
       @days = Track.init_days @begin_date.to_date, @end_date.to_date
   	end
 end

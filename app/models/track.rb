@@ -35,12 +35,12 @@ class Track
 		  	end
 		  	if date == Date.today
 				24.times do |hour|
-					right_now = DateTime.now
-					if hour == DateTime.now.strftime('%H').to_i
+					right_now = Time.zone.now
+					if hour == Time.zone.now.strftime('%H').to_i
 						time_in_seconds = right_now.strftime("%M").to_i*60 + right_now.strftime("%S").to_i
 						day[hour].merge!({ time_in_seconds => nil }) 
 					end
-					if hour > DateTime.now.strftime('%H').to_i
+					if hour > Time.zone.now.strftime('%H').to_i
 						day[hour] = {0 => nil}
 					end
 				end
