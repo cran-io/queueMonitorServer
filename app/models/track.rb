@@ -2,12 +2,14 @@ class Track
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	field :status, type: Mongoid::Boolean
-
-	validates :status, :inclusion => {:message =>"not boolean status", :in => [true, false] }, :on => :create
+	field :sent_at, type: DateTime
 	
-	scope :between, ->(begin_date, end_date){where(:created_at.gte => begin_date.to_datetime, :created_at.lte => end_date.to_datetime.end_of_day)}
-	scope :before, ->(date){where(:created_at.lt => date.to_datetime.beginning_of_day)}
-	scope :for_this, ->(date){where(:created_at.gte => date.to_datetime, :created_at.lte => date.to_datetime.end_of_day)}
+	validates :status, :inclusion => {:message =>"not boolean status", :in => [true, false] }, :on => :create
+	validates :sent_at, :presence => true
+
+	scope :between, ->(begin_date, end_date){where(:sent_at.gte => begin_date.to_datetime, :sent_at.lte => end_date.to_datetime.end_of_day)}
+	scope :before, ->(date){where(:sent_at.lt => date.to_datetime.beginning_of_day)}
+	scope :for_this, ->(date){where(:sent_at.gte => date.to_datetime, :sent_at.lte => date.to_datetime.end_of_day)}
 	
 	def self.init_days begin_date, end_date
 		days = Hash.new
@@ -16,11 +18,11 @@ class Track
 		(begin_date..end_date).each do |date|
 		  	day = Hash.new
 			self.for_this(date).each do |track|
-				time_in_seconds = track.created_at.strftime("%M").to_i*60 + track.created_at.strftime("%S").to_i
-				if day[track.created_at.strftime("%H").to_i].nil?
-					day[track.created_at.strftime("%H").to_i] = {time_in_seconds => track.status}
+				time_in_seconds = track.sent_at.strftime("%M").to_i*60 + track.sent_at.strftime("%S").to_i
+				if day[track.sent_at.strftime("%H").to_i].nil?
+					day[track.sent_at.strftime("%H").to_i] = {time_in_seconds => track.status}
 				else
-					day[track.created_at.strftime("%H").to_i].merge!({time_in_seconds => track.status})
+					day[track.sent_at.strftime("%H").to_i].merge!({time_in_seconds => track.status})
 				end
 			end
 			day = day.sort.to_h

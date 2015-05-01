@@ -3,7 +3,7 @@ class TracksController < ApplicationController
   before_action :set_chart, :only => [:index, :refresh, :refresh_head]
   
   def index	
-		@tracks = Track.between(Time.zone.now.to_date-10, Time.zone.now.to_date).limit 10
+		@tracks = Track.between(Time.zone.now.to_date-10, Time.zone.now.to_date).order('created_at desc').limit 10
   end
 
   def create
@@ -28,7 +28,7 @@ class TracksController < ApplicationController
   end
   private
     def track_params
-      params.require(:track).permit(:status)
+      params.require(:track).permit(:status, :sent_at)
     end
 
     def set_chart  
