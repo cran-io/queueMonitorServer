@@ -1,14 +1,14 @@
 <div class="row">
 	<div class="col-xs-6 no-padding">
-		<% (0...12).each do |hour|%>
-			<div class="col-xs-1 no-padding">
+		<% (8...15).each do |hour|%>
+			<div class="col-jt-2 no-padding">
 				<%= render partial: 'hour', locals: { hour: day[hour].to_a } %>
 			</div>
 		<%end%>
 	</div>
-	<div class="col-xs-6 no-padding"style="margin-left:-1px;">
-		<% (12...24).each do |hour|%>
-			<div class="col-xs-1 no-padding">
+	<div class="col-xs-6 no-padding">
+		<% (15...22).each do |hour|%>
+			<div class="col-jt-2 no-padding">
 				<%= render partial: 'hour', locals: { hour: day[hour].to_a } %>
 			</div>
 		<%end%>

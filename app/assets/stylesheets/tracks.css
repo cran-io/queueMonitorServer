@@ -29,3 +29,61 @@
 .form-control[readonly] {
 	background-color:#FFFFFF!important;
 }
+
+/*Custom bootstrap grid of 14 rows*/
+.col-jt-1, .col-jt-2, .col-jt-3, .col-jt-4, .col-jt-5, .col-jt-6, .col-jt-7, .col-jt-8, .col-jt-9, .col-jt-10, .col-jt-11, .col-jt-12{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.col-jt-1, .col-jt-2, .col-jt-3, .col-jt-4, .col-jt-5, .col-jt-6, .col-jt-7, .col-jt-8, .col-jt-9, .col-jt-10, .col-jt-11, .col-jt-12 {
+  float: left;
+}
+.col-jt-14 {
+  width: 100%;
+}
+.col-jt-13 {
+  width: 92.857142857%;
+}
+.col-jt-12 {
+  width: 85.714285714%;
+}
+.col-jt-11 {
+  width: 78.571428571%;
+}
+.col-jt-10 {
+  width: 71.428571429%;
+}
+.col-jt-9 {
+  width: 64.285714286%;
+}
+.col-jt-8 {
+  width: 57.14285714286%;
+}
+.col-jt-7 {
+  width: 50%;
+}
+.col-jt-6 {
+  width: 42.857142857%;
+}
+.col-jt-5 {
+  width: 35.714285714%;
+}
+.col-jt-4 {
+  width: 28.571428571%;
+}
+.col-jt-3 {
+  width: 21.428571429%;
+}
+.col-jt-2 {
+  width: 14.285714286%;
+}
+.col-jt-1 {
+  width: 7.14285714286%;
+}
+
+
+
+
+7.142857143
