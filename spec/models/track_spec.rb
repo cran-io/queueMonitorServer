@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Track, type: :model do
  	describe "validations" do
 		it {should validate_inclusion_of(:status).in_array([true,false])}
+		it {should validate_presence_of(:sent_at)}
 	end
 
 	describe "methods" do
