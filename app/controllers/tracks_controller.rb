@@ -28,11 +28,13 @@ class TracksController < ApplicationController
   end
   private
     def track_params
-      params.require(:track).permit(:status, :sent_at)
+      track_params = params.require(:track).permit(:status, :sent_at)
+      track_params[:sent_at] = DateTime.strptime(track_params[:sent_at], '%Y-%m-%d-%H-%M-%s').change(:offset => '-0300')
+      track_params
     end
 
     def set_chart  
-      @begin_date = params[:begin_date] || Time.zone.now.to_date - 10
+      @begin_date = params[:begin_date] || Time.zone.now.to_date-10
       @end_date = params[:end_date] || Time.zone.now.to_date
       @days = Track.init_days @begin_date.to_date, @end_date.to_date
   	end

@@ -24,18 +24,17 @@ RSpec.describe TracksController, type: :controller do
   end
  
   describe "POST #create" do 
-    it{should permit(:status, :sent_at).for(:create)}
   	context "with valid format" do
   		it "should create a track" do
   			expect{
-	  			post :create, :track => {:status => false, :sent_at => DateTime.now}
+	  			post :create, :track => {:status => false, :sent_at => '2015-05-01-14-21-26-251'}
   			}.to change(Track, :count).by(+1)
   			expect(response).to have_http_status(:success)
   		end
 
   		it "should not create a track" do
   			expect{
-	  			post :create, :track => {:status => nil, :sent_at => DateTime.now}
+	  			post :create, :track => {:status => nil, :sent_at => '2015-05-01-14-21-26-251'}
   			}.to change(Track, :count).by(0)
   			expect(response).not_to have_http_status(:success)
   		end
@@ -43,7 +42,7 @@ RSpec.describe TracksController, type: :controller do
   	context "with invalid format" do
   		it "tries to create a track" do
   			expect{
-	  			post :create, :track => {:foobar => false, :sent_at => DateTime.now}
+	  			post :create, :track => {:foobar => false, :sent_at => '2015-05-01-14-21-26-251'}
   			}.to change(Track, :count).by(0)
   			expect(response).not_to have_http_status(:success)
   		end
