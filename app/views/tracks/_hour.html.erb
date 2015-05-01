@@ -15,10 +15,10 @@
 			<div class="progress-bar progress-bar-empty" style="width:<%= (proportion*100)/60.to_f %>%">
 			</div>
 		<% elsif val %>
-			<div class="progress-bar progress-bar-success" style="width:<%= (proportion*100)/60.to_f %>%">
+			<div class="progress-bar progress-bar-danger" style="width:<%= (proportion*100)/60.to_f %>%">
 			</div>
 		<%else %>
-			<div class="progress-bar progress-bar-info" style="width: <%= (proportion*100)/60.to_f %>%">
+			<div class="progress-bar progress-bar-success" style="width: <%= (proportion*100)/60.to_f %>%">
 			</div>
 		<% end %>
 	<% end %>
