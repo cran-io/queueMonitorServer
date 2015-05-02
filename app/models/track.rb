@@ -12,6 +12,7 @@ class Track
 	scope :for_this, ->(date){where(:sent_at.gte => date.to_datetime, :sent_at.lte => date.to_datetime.end_of_day)}
 	
 	def self.init_days begin_date, end_date
+		right_now = Time.zone.now
 		days = Hash.new
 		previous_days = self.before begin_date
 		last = previous_days.empty? ? nil : previous_days.last.status
@@ -35,14 +36,14 @@ class Track
 			  		last = day[hour].values.last
 		  		end
 		  	end
-		  	if date == Date.today
+		  	if date == right_now.beginning_of_day.to_date
 				24.times do |hour|
-					right_now = Time.zone.now
-					if hour == Time.zone.now.strftime('%H').to_i
+					right_now = right_now
+					if hour == right_now.strftime('%H').to_i
 						time_in_seconds = right_now.strftime("%M").to_i*60 + right_now.strftime("%S").to_i
 						day[hour].merge!({ time_in_seconds => nil }) 
 					end
-					if hour > Time.zone.now.strftime('%H').to_i
+					if hour > right_now.strftime('%H').to_i
 						day[hour] = {0 => nil}
 					end
 				end

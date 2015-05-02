@@ -13,6 +13,37 @@ RSpec.describe Track, type: :model do
 					expect(Track.init_days(Date.today-10, Date.today)).to_not be_empty
 				end
 			end
+			
+			context "with tracks" do
+				sent_at_f1 = Time.zone.now.to_f - 60*60*24
+				sent_at_f2 = Time.zone.now.to_f - (60*60*24 + 10)
+				sent_at1 = Time.at sent_at_f1
+				sent_at2 = Time.at sent_at_f2
+				let!(:track_with_true_values){FactoryGirl.create(:track, :status => true, :sent_at => sent_at1)}
+				let!(:track_with_false_values){FactoryGirl.create(:track, :status => false, :sent_at => sent_at2)}
+				
+				it "should contain correct values at specific time" do
+					days = Track.init_days(Date.today-2, Date.today)
+					expect(days).to_not be_empty
+					day = sent_at1.strftime("%a, %d %b")
+					hour = sent_at1.strftime("%H").to_i
+					expect(days[day][hour].values).to match_array [nil, false, true]
+				end
+			end
+
+			context "without tracks" do
+			
+				it "should have only nil values" do
+					days = Track.init_days(Date.today-2, Date.today)
+					days.each do |day, hours|
+						hours.each do |hour, secs|
+								expect(secs.values).to_not include true, false 
+								expect(secs.values).to include nil
+						end
+					end
+				end
+				
+			end
 		end
 	end
 end
