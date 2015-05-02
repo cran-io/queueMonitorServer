@@ -1,26 +1,24 @@
-<a href="#" class="hour">
-<div class="progress progress-container-bordered">
-	<% 
-		c = 0
-		hour.each do |key,val| 
-	 		if hour[c+1].nil?
-	 			proportion = 3600 - key
-	 		else
-	 			proportion = hour[c+1].first - key
-	 		end	
-			c += 1
-			proportion = proportion/60.0
-		%>	
-		<% if val.nil?%>
-			<div class="progress-bar progress-bar-empty" style="width:<%= (proportion*100)/60.to_f %>%">
-			</div>
-		<% elsif val %>
-			<div class="progress-bar progress-bar-danger" style="width:<%= (proportion*100)/60.to_f %>%">
-			</div>
-		<%else %>
-			<div class="progress-bar progress-bar-success" style="width: <%= (proportion*100)/60.to_f %>%">
-			</div>
+<div <%= "class=col-xs-10" if defined? in_chart %>>
+	<div class="progress progress-container-bordered">
+		<% 
+			c = 0
+			hour.each do |key,val| 
+				proportion = proportion_for_these hour, c, key
+		 		c += 1
+			%>	
+			<% if val.nil? %>
+				<div class="progress-bar progress-bar-empty" style="width:<%= (proportion*100)/60.to_f %>%">
+				</div>
+			<% elsif val %>
+				<div class="progress-bar progress-bar-danger" style="width:<%= (proportion*100)/60.to_f %>%">
+				</div>
+			<% else %>
+				<div class="progress-bar progress-bar-success" style="width: <%= (proportion*100)/60.to_f %>%">
+				</div>
+			<% end %>
 		<% end %>
-	<% end %>
+	</div>
 </div>
-</a>
+<% if defined? in_chart %>
+	<%= render partial: 'hour_zoom', locals: {hour: hour}%>
+<% end %>

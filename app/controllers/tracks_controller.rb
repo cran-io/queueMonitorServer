@@ -26,6 +26,14 @@ class TracksController < ApplicationController
       format.html { render partial: 'days_head', locals: { days: @days } }
     end
   end
+
+  def show_hour
+    hour = parse_an params[:hour] || Hash.new
+    respond_to do |format|
+      format.html { render partial: 'hour', locals: { hour: hour.to_a, in_chart: false } }
+    end
+  end
+
   private
     def track_params
       track_params = params.require(:track).permit(:status, :sent_at)
@@ -38,4 +46,19 @@ class TracksController < ApplicationController
       @end_date = params[:end_date] || Time.zone.now.to_date
       @days = Track.init_days @begin_date.to_date, @end_date.to_date
   	end
+
+    def parse_an hour
+      hour.each do |seconds,state|
+        case state
+        when 'true', 'false'
+          hour[seconds] = bool_this hour[seconds]
+        else
+          hour[seconds] = nil
+        end
+      end
+    end
+
+    def bool_this bool_str
+      bool_str == 'true'
+    end
 end

@@ -2,14 +2,18 @@
 	<div class="col-xs-6 no-padding">
 		<% (8...15).each do |hour|%>
 			<div class="col-jt-2 no-padding">
-				<%= render partial: 'hour', locals: { hour: day[hour].to_a } %>
+				<a href="javascript:void(0)" class="hour" data-hour="<%= day[hour].to_json %>">
+					<%= render partial: 'hour', locals: { hour: day[hour].to_a } %>
+				</a>
 			</div>
 		<%end%>
 	</div>
 	<div class="col-xs-6 no-padding">
 		<% (15...22).each do |hour|%>
 			<div class="col-jt-2 no-padding">
-				<%= render partial: 'hour', locals: { hour: day[hour].to_a } %>
+				<a href="javascript:void(0)" class="hour" data-hour="<%= day[hour].to_json %>">
+					<%= render partial: 'hour', locals: { hour: day[hour].to_a } %>
+				</a>
 			</div>
 		<%end%>
 	</div>

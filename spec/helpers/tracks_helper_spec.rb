@@ -11,4 +11,13 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe TracksHelper, type: :helper do
+	describe "calculate proportion" do
+		hour = [[0, nil], [1000, true]]
+		it "should calculate proportion when not last" do
+			expect(helper.proportion_for_these(hour, 0, 0)).to eq(1000/60.0)
+		end
+		it "should calculate proportion when last" do
+			expect(helper.proportion_for_these(hour, 1, 1000)).to eq(2600/60.0)
+		end
+	end
 end

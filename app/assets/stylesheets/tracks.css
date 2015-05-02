@@ -83,7 +83,16 @@
   width: 7.14285714286%;
 }
 
+.bigger{
+  border-radius:3px;
+  height:45px!important;
+  border-right:0;
+}
 
+.hidden{
+  display:none;
+}
 
-
-7.142857143
+.day-data{
+  font-size:12px;
+}

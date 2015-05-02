@@ -13,6 +13,7 @@ RSpec.describe TracksController, type: :controller do
     it "should render days partial" do
       get :refresh
       expect(response).to render_template :partial => '_days'
+      expect(response).to have_http_status(:success)
     end
   end
  
@@ -20,9 +21,28 @@ RSpec.describe TracksController, type: :controller do
     it "should render header partial" do
       get :refresh_head
       expect(response).to render_template :partial => '_days_head'
+      expect(response).to have_http_status(:success)
     end
   end
- 
+  
+  describe "GET #show_hour" do
+    context "with hour params" do
+      it "should render hour partial" do
+        get :show_hour, :hour=>{"900"=>"nil", "1400"=>"false"}
+        expect(response).to render_template :partial => '_hour'
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "without hour params" do
+      it "should render hour partial" do
+        get :show_hour
+        expect(response).to render_template :partial => '_hour'
+        expect(response).to have_http_status(:success)
+      end
+    end
+  end
+
   describe "POST #create" do 
   	context "with valid format" do
   		it "should create a track" do

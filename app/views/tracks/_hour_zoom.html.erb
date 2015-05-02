@@ -1,0 +1,33 @@
+<div class="col-xs-2">
+	<% 
+		c = 0
+		nil_minutes = 0
+		false_minutes = 0
+		true_minutes = 0
+		hour.each do |key,val| 
+			proportion = proportion_for_these hour, c, key
+			true_minutes += proportion if val
+			false_minutes += proportion if val == false
+			c += 1
+		end
+	%>
+	<div class="day-data">	
+		<% if not false_minutes.zero? %>
+			<div><strong>OFF:</strong> <%= false_minutes.round %> minutos</div>
+		<% end %>
+		<% if not true_minutes.zero? %>
+      <div><strong>ON:</strong> <%= true_minutes.round %> minutos</div>
+		<% end %>
+	</div>
+</div>
+<div class="col-xs-10">
+	<% 12.times do |iter| %>
+		<div class="col-xs-1 no-padding">
+			<div class="progress progress-container-bordered">
+				<div class="progress-bar progress-bar-success" style="width: 0%;">
+				</div>
+				<div class="text-center pull-right"><%= "#{(iter+1)*5-1}m " %></div>
+			</div>
+		</div>
+	<% end %>
+</div>

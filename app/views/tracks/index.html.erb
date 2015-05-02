@@ -54,6 +54,22 @@
 	</div>
 </div>
 <br>
+<div class="row" id="hour-panel-container" style="display:none;">
+	<div class="col-xs-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    Información
+		  	<button type="button" class="close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="panel-body">
+			<div class="row" id="clicked-day"> 
+			</div>
+		  </div>
+		</div>
+		</div></div>
+<br>
 	<% unless @tracks.empty? %>
 		<%= render partial: 'table', locals: { tracks: @tracks }%>
 	<% end %>
