@@ -25,13 +25,13 @@ RSpec.describe Track, type: :model do
 				it "should contain correct values at specific time" do
 					days = Track.init_days(Date.today-2, Date.today)
 					expect(days).to_not be_empty
-					day = sent_at1.strftime("%a, %d %b")
+					day = sent_at1.strftime("%a %d %b")
 					hour = sent_at1.strftime("%H").to_i
 					expect(days[day][hour].values).to match_array [nil, false, true]
 				end
 				it "should contain nil as last value" do
 					days = Track.init_days(Date.today-2, Date.today)
-					day = Time.zone.now.strftime("%a, %d %b")
+					day = Time.zone.now.strftime("%a %d %b")
 					hour = Time.zone.now.strftime("%H").to_i
 					expect(days[day][hour].values.last).to be_nil
 				end
