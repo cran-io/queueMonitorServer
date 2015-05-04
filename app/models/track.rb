@@ -48,7 +48,7 @@ class Track
 					end
 				end
 			end
-			days.merge!({date.strftime("%a, %d %b")=>day.sort.to_h})
+			days.merge!({date.strftime("%a %d %b")=>day.sort.to_h})
 	  	end 
 	  	days
 	end

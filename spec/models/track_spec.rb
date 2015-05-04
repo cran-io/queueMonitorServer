@@ -15,8 +15,8 @@ RSpec.describe Track, type: :model do
 			end
 			
 			context "with tracks" do
-				sent_at_f1 = Time.zone.now.to_f - 60*60*24
-				sent_at_f2 = Time.zone.now.to_f - (60*60*24 + 10)
+				sent_at_f1 = Time.zone.now.to_f - 60*60*10
+				sent_at_f2 = Time.zone.now.to_f - (60*60*10 + 10)
 				sent_at1 = Time.at sent_at_f1
 				sent_at2 = Time.at sent_at_f2
 				let!(:track_with_true_values){FactoryGirl.create(:track, :status => true, :sent_at => sent_at1)}
@@ -28,6 +28,12 @@ RSpec.describe Track, type: :model do
 					day = sent_at1.strftime("%a, %d %b")
 					hour = sent_at1.strftime("%H").to_i
 					expect(days[day][hour].values).to match_array [nil, false, true]
+				end
+				it "should contain nil as last value" do
+					days = Track.init_days(Date.today-2, Date.today)
+					day = Time.zone.now.strftime("%a, %d %b")
+					hour = Time.zone.now.strftime("%H").to_i
+					expect(days[day][hour].values.last).to be_nil
 				end
 			end
 

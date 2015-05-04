@@ -30,16 +30,19 @@ $(document).ready(function(){
 
 function get_day(){
 	$('.hour').click(function(){
-		var data = $(this).data('hour');
+		var hour_values = $(this).data('hour');
+		var hour_range = $(this).data('range') + "hs - " + (parseInt($(this).data('range'))+1) + "hs"
+		var title = $(this).data("day") + " | " + hour_range;
 		$.ajax({
 			type: 'GET',
 			url: '/show_hour',
-			data: {hour: data},
+			data: {hour: hour_values},
 			success: function(response){
 				$('#clicked-day').html(response);
 				$('#clicked-day').find('.progress').first().addClass('bigger');
 				$('#hour-panel-container').fadeIn(function(){
 				});
+				$('#clicked-day-head').html(title)
 			}
 		});	
 	});
