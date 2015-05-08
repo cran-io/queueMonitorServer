@@ -1,64 +1,15 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var http = require('http');
-var fs = require('fs');
-var moment = require('moment');
+var http = require('http'),
+    httpProxy = require('http-proxy');
+ 
+var proxy = httpProxy.createProxyServer({});
 
-var app = express();
-
-app.set('port', process.env.PORT || 5000);
-
-var msg = 'Hello World!';
-app.get('/', function(request, response) {
-  response.send(msg);
+var server = http.createServer(function(req, res) {
+  // You can define here your custom logic to handle the request 
+  // and then proxy the request. 
+  delete req.headers.host;
+  console.log(req.url);
+  proxy.web(req, res, { target: 'http://queue-monitor.herokuapp.com' });
 });
-
-// assuming POST: temp=foo        <-- URL encoding
-// or       POST: {"temp":"foo"}  <-- JSON encoding
-app.post('/test', function(req, res) {
-  console.log(req.body);
-  msg = req.body.msg;
-  res.json('OK');
-});
-
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-
-// assuming POST: temp=foo        <-- URL encoding
-// or       POST: {"temp":"foo"}  <-- JSON encoding
-app.post('/api/v1/stats', function(req, res) {
-  console.log(req.body);
-
-  var m = {
-     temp: req.body.temp, 
-     humidity: req.body.humidity, 
-     pressure:  req.body.pressure,
-     deviceId:  req.body.deviceId,
-  };
-
-  if(m.temp && m.humidity && m.pressure && m.deviceId){
-    fs.appendFile("data", moment().format() + '\n', function(err) {
-      if(err) return console.log(err);
-      console.log("Data updated.");
-    });
-
-    msg = 'Temp is: ';
-    msg += m.temp;
-    res.json('OK');
-  }
-  else{
-    res.json('BAD REQUEST');
-  }
-});
-
-var server =http.createServer(app);
-server.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
-
-
-
+ 
+console.log("listening on port 5000")
+server.listen(5000);

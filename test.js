@@ -1,13 +1,11 @@
 var http = require('http');
 
-var status = {
-  deviceId: 'testdevice',
-  temp : Math.floor(Math.random()*50),
-  humidity : Math.floor(Math.random()*100),
-  pressure : Math.floor(Math.random()*1000)
+var track = {
+  status: true,
+  sent_at:'2015-05-01-12-00-00-000'
 };
 
-var statusString = JSON.stringify(status);
+var statusString = JSON.stringify(track);
 
 var headers = {
   'Content-Type': 'application/json',
@@ -15,9 +13,8 @@ var headers = {
 };
 
 var options = {
-  hostname: 'storage.cran.io',
-  port: 5000,
-  path: '/api/v1/stats',
+  hostname: 'queue-monitor.herokuapp.com',
+  path: '/tracks',
   method: 'POST',
   headers: headers
 };
