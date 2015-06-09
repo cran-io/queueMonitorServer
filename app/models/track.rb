@@ -88,8 +88,7 @@ class Track
       percentage = 0
       cont = 0
     end
-    binding.pry
-
+    percentage_hash
   end
 
 end

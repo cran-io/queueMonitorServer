@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Rango</th>
+      <th>Lunes X</th>
+      <th>Promedio de los ultimos 10 Lunes</th>
+      <th>Promedio de los ultimos 5 Lunes</th>
+      <th>Promedio de los ultimos 7 dias </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% (8...22).each do |hour|%>
+      <tr>
+        <td><%= sprintf('%02d', hour).to_s+" - "+sprintf('%02d', hour+1).to_s %></td>
+        <td><%= "#{track[hour]}%"  %></td>
+        <td><%= "#{track[hour]}%"  %></td>
+        <td><%= "#{track[hour]}%"  %></td>
+        <td><%= "#{track[hour]}%"  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

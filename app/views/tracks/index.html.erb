@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-xs-3 col-xs-offset-8 no-padding">
-    <div class="input-daterange input-group pull-right" id="datepicker">
+    <div class="input-daterange input-group pull-right" id="range-datepicker">
       <input type="text" class="input-sm form-control" id="start" value="<%= @begin_date.strftime("%d/%m/%Y") %>" readonly />
       <span class="input-group-addon">a</span>
       <input type="text" class="input-sm form-control" id="end" value="<%= @end_date.strftime("%d/%m/%Y") %>" readonly />
@@ -64,14 +64,33 @@
       </button>
       </div>
       <div class="panel-body">
-      <div class="row" id="clicked-day"> 
-      </div>
+        <div class="row" id="clicked-day"> 
+        </div>
       </div>
     </div>
-    </div></div>
+  </div>
+</div>
 <br>
-  <% unless @tracks.empty? %>
-    <%= render partial: 'table', locals: { tracks: @tracks }%>
-  <% end %>
-<br><br>
 
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-3">
+        <div class="form-group">
+          <div class='input-group date' id='stats-datepicker'>
+              <input type='text' class="form-control" value="<%= @begin_date.strftime("%d/%m/%Y") %>" readonly/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <%= render partial: 'comparison_table', locals: { track: @track2 } %>
+  </div>
+  <div class="col-md-6 col-xs-12 well">
+
+  </div>
+</div>
