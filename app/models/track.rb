@@ -65,4 +65,31 @@ class Track
     days
   end
 
+  def self.average day
+    day_hash = Hash.new
+    percentage_hash = Hash.new
+    day_hash = self.init_days day, day
+    day_hash = day_hash.values.first
+    percentage = 0
+    cont = 0
+    day_hash.each do |hour, seconds|
+      seconds = seconds.to_a
+      seconds.each do |key,value|
+        if seconds[cont][1] == true
+          if seconds[cont+1] != nil
+            percentage += seconds[cont+1][0] - seconds[cont][0]
+          else
+            percentage += 3600 - seconds[cont][0]
+          end
+        end
+        cont += 1
+      end
+      percentage_hash[hour] = ((percentage/3600.0) * 100).round
+      percentage = 0
+      cont = 0
+    end
+    binding.pry
+
+  end
+
 end
