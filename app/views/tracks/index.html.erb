@@ -3,75 +3,75 @@
 <% end %>
 
 <div class="row">
-	<div class="col-xs-3 col-xs-offset-8 no-padding">
-		<div class="input-daterange input-group pull-right" id="datepicker">
-			<input type="text" class="input-sm form-control" id="start" value="<%= @begin_date.strftime("%d/%m/%Y") %>" readonly />
-			<span class="input-group-addon">a</span>
-			<input type="text" class="input-sm form-control" id="end" value="<%= @end_date.strftime("%d/%m/%Y") %>" readonly />
-		</div>
-	</div>
-	<div class="col-xs-1 no-padding">
-		<button class="btn btn-sm btn-success col-xs-11 pull-right" id="search">Filtrar</button>
-	</div>
+  <div class="col-xs-3 col-xs-offset-8 no-padding">
+    <div class="input-daterange input-group pull-right" id="datepicker">
+      <input type="text" class="input-sm form-control" id="start" value="<%= @begin_date.strftime("%d/%m/%Y") %>" readonly />
+      <span class="input-group-addon">a</span>
+      <input type="text" class="input-sm form-control" id="end" value="<%= @end_date.strftime("%d/%m/%Y") %>" readonly />
+    </div>
+  </div>
+  <div class="col-xs-1 no-padding">
+    <button class="btn btn-sm btn-success col-xs-11 pull-right" id="search">Filtrar</button>
+  </div>
 </div>
 <br>
 <div class="row">
-	<div class="col-xs-1 track-chart-days">
-		<%= render partial: 'days_head', locals: { days: @days } %>
-	</div>
-	<div class="col-xs-11">
-		<div class="row">
-			<div class="col-xs-12">
-			<div class="row">
-				<div class="col-xs-6 no-padding">
-					<% (8...15).each do |range|%>
-						<div class="col-jt-2 no-padding track-chart-head">
-							<div class="progress">
-							  <div class="progress-bar progress-bar-success" style="width: 0%;">
-							  </div>
-								<%= sprintf('%02d', range).to_s+"-"+sprintf('%02d', range+1).to_s  %>
-							</div>
-						</div>
-				<% end %>
-					</div>
-				<div class="col-xs-6 no-padding text-center">
-					<% (15...22).each do |range| %>
-						<div class="col-jt-2 track-chart-head" >
-							<div class="progress">
-							  <div class="progress-bar progress-bar-success" style="width: 0%;">
-							  </div>
-									<%= "#{range}-#{range+1}" %>
-							</div>
-						</div>
-					<% end %>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12" id="days">
-				<%= render partial: 'days', locals: { days: @days } %>
-			</div>
-		</div>
-	</div>
+  <div class="col-xs-1 track-chart-days">
+    <%= render partial: 'days_head', locals: { days: @days } %>
+  </div>
+  <div class="col-xs-11">
+    <div class="row">
+      <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-6 no-padding">
+          <% (8...15).each do |range|%>
+            <div class="col-jt-2 no-padding track-chart-head">
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: 0%;">
+                </div>
+                <%= sprintf('%02d', range).to_s+"-"+sprintf('%02d', range+1).to_s  %>
+              </div>
+            </div>
+        <% end %>
+          </div>
+        <div class="col-xs-6 no-padding text-center">
+          <% (15...22).each do |range| %>
+            <div class="col-jt-2 track-chart-head" >
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: 0%;">
+                </div>
+                  <%= "#{range}-#{range+1}" %>
+              </div>
+            </div>
+          <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12" id="days">
+        <%= render partial: 'days', locals: { days: @days } %>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
 <div class="row" id="hour-panel-container" style="display:none;">
-	<div class="col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <div id="clicked-day-head" style="display:inline;"></div>
-		  	<button type="button" class="close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="panel-body">
-			<div class="row" id="clicked-day"> 
-			</div>
-		  </div>
-		</div>
-		</div></div>
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div id="clicked-day-head" style="display:inline;"></div>
+        <button type="button" class="close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="panel-body">
+      <div class="row" id="clicked-day"> 
+      </div>
+      </div>
+    </div>
+    </div></div>
 <br>
-	<% unless @tracks.empty? %>
-		<%= render partial: 'table', locals: { tracks: @tracks }%>
-	<% end %>
+  <% unless @tracks.empty? %>
+    <%= render partial: 'table', locals: { tracks: @tracks }%>
+  <% end %>
 <br><br>
 
