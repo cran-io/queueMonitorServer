@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="col-xs-1 no-padding">
-    <button class="btn btn-sm btn-success col-xs-11 pull-right" id="search">Filtrar</button>
+    <button class="btn btn-sm btn-success col-xs-11 pull-right" id="filter">Filtrar</button>
   </div>
 </div>
 <br>
@@ -75,20 +75,25 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="row">
-      <div class="col-xs-3">
-        <div class="form-group">
-          <div class='input-group date' id='stats-datepicker'>
-              <input type='text' class="form-control" value="<%= @begin_date.strftime("%d/%m/%Y") %>" readonly/>
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-              </span>
+      <div class="col-md-3 col-xs-12">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label for="stat-date" class="col-sm-2 control-label">Fecha</label>
+            <div class="col-sm-10">
+              <div class='input-group date' id='stats-datepicker'>
+                <input type='text' class="form-control datepicker-input" value="<%= @date.strftime("%d/%m/%Y") %>" readonly/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-6 col-xs-12">
-    <%= render partial: 'comparison_table', locals: { track: @track2 } %>
+  <div id="comparison-table-container" class="col-md-6 col-xs-12">
+    <%= render partial: 'comparison_table', :locals => { :day_track => @day_track, :selected_date => @date} %>
   </div>
   <div class="col-md-6 col-xs-12 well">
 

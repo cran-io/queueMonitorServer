@@ -1,14 +1,13 @@
 class TracksController < ApplicationController
 	skip_before_action :verify_authenticity_token
   before_action :set_chart, :only => [:index, :refresh, :refresh_head]
-  
+  before_action :set_day_track, :only => [:index, :refresh_table]
   def index	
 		@tracks = Track.between(Time.zone.now.to_date-10, Time.zone.now.to_date).order('created_at desc').limit 10
-    @track2 = Track.average Time.zone.now.to_date
   end
 
   def create
-    @track = Track.new(track_params)
+    @track = Track.new track_params
     if @track.save
       render :nothing => true, :status => :ok
     else
@@ -25,6 +24,12 @@ class TracksController < ApplicationController
   def refresh_head
     respond_to do |format|
       format.html { render partial: 'days_head', locals: { days: @days } }
+    end
+  end
+
+  def refresh_table
+    respond_to do |format|
+      format.html { render partial: 'comparison_table', locals: { day_track: @day_track, selected_date: @date } }  
     end
   end
 
@@ -48,6 +53,11 @@ class TracksController < ApplicationController
       @end_date = params[:end_date] || Time.zone.now.to_date
       @days = Track.init_days @begin_date.to_date, @end_date.to_date
   	end
+
+    def set_day_track
+      @date = params[:date].nil? ? Time.zone.now.to_date : params[:date].to_date
+      @day_track = Track.per_day_for @date
+    end
 
     def parse_an hour
       hour.each do |seconds,state|

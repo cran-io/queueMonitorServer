@@ -65,7 +65,7 @@ class Track
     days
   end
 
-  def self.average day
+  def self.per_day_for day
     day_hash = Hash.new
     percentage_hash = Hash.new
     day_hash = self.init_days day, day

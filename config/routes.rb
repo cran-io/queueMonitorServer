@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   resources :tracks, only: [:index, :create]
   get '/refresh' => 'tracks#refresh'
   get '/refresh_head' => 'tracks#refresh_head'
-   get '/show_hour' => 'tracks#show_hour'
+  get '/refresh_table' => 'tracks#refresh_table'
+  get '/show_hour' => 'tracks#show_hour'
   root 'tracks#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,21 +1,21 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Rango</th>
-      <th>Lunes X</th>
-      <th>Promedio de los ultimos 10 Lunes</th>
-      <th>Promedio de los ultimos 5 Lunes</th>
-      <th>Promedio de los ultimos 7 dias </th>
+      <th>Rango </th>
+      <th><%= "#{translate_day(selected_date.strftime('%A'))} #{selected_date.strftime('%d/%m')}" %></th>
+      <th>Promedio de los últimos 10 <%= "#{translate_day(selected_date.strftime('%A'))}" %></th>
+      <th>Promedio de los últimos 5 <%= "#{translate_day(selected_date.strftime('%A'))}" %></th>
+      <th>Promedio de los últimos 7 días </th>
     </tr>
   </thead>
   <tbody>
     <% (8...22).each do |hour|%>
       <tr>
         <td><%= sprintf('%02d', hour).to_s+" - "+sprintf('%02d', hour+1).to_s %></td>
-        <td><%= "#{track[hour]}%"  %></td>
-        <td><%= "#{track[hour]}%"  %></td>
-        <td><%= "#{track[hour]}%"  %></td>
-        <td><%= "#{track[hour]}%"  %></td>
+        <td><%= "#{day_track[hour]}%" %></td>
+        <td><%= "#{day_track[hour]}%" %></td>
+        <td><%= "#{day_track[hour]}%" %></td>
+        <td><%= "#{day_track[hour]}%" %></td>
       </tr>
     <% end %>
   </tbody>

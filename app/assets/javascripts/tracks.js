@@ -2,29 +2,38 @@
 // All this logic will automatically be available in application.js.
 
 $(document).ready(function(){
+  
   $('.close').click(function(){
     $('#hour-panel-container').hide();
   });
 
   get_day();
   $('#range-datepicker').datepicker({
-      format: "dd/mm/yyyy",
-      language: "es",
+      format: 'dd/mm/yyyy',
+      language: 'es',
       endDate: '0',
       startDate: '-1m' 
   });
 
+
   $('#stats-datepicker').datepicker({
-    format: "dd/mm/yyyy",
-    language: "es"
+    format: 'dd/mm/yyyy',
+    language: 'es',
+    endDate: '0',
+    startDate: '-1m',
+    autoclose: true
+  }).on('hide', function(){
+    var date = $('#stats-datepicker').find('input').val();
+    refresh_table(date);
   });
 
-  $('#search').click(function(){
+  $('#filter').click(function(){
     begin_date = $('#start').val();
     end_date = $('#end').val();
     refresh_chart(begin_date, end_date);
     refresh_head(begin_date, end_date);
   });
+
 
   setInterval(function(){
     begin_date = $('#start').val();
@@ -53,6 +62,21 @@ function get_day(){
     }); 
   });
 }
+
+function refresh_table(date){
+  data = {
+    date: date
+  }
+  $.ajax({
+    type: 'GET',
+    url: 'refresh_table',
+    data: data,
+    success: function(response){
+      $('#comparison-table-container').html(response);
+    }
+  });
+}
+
 function refresh_chart(begin_date, end_date){
   data = { 
     begin_date: begin_date, 
