@@ -65,30 +65,64 @@ class Track
     days
   end
 
-  def self.per_day_for day
+  def self.per_day_for beg_date, end_date
     day_hash = Hash.new
     percentage_hash = Hash.new
-    day_hash = self.init_days day, day
-    day_hash = day_hash.values.first
-    percentage = 0
-    cont = 0
-    day_hash.each do |hour, seconds|
-      seconds = seconds.to_a
-      seconds.each do |key,value|
-        if seconds[cont][1] == true
-          if seconds[cont+1] != nil
-            percentage += seconds[cont+1][0] - seconds[cont][0]
-          else
-            percentage += 3600 - seconds[cont][0]
-          end
-        end
-        cont += 1
-      end
-      percentage_hash[hour] = ((percentage/3600.0) * 100).round
+    days_hash = self.init_days beg_date, end_date
+    day_count= 0
+
+    days_hash.each do |day, day_hash|
       percentage = 0
       cont = 0
+      
+      day_hash.each do |hour, seconds|
+        seconds = seconds.to_a
+        seconds.each do |key,value|
+          if seconds[cont][1] == true
+            if seconds[cont+1] != nil
+              percentage += seconds[cont+1][0] - seconds[cont][0]
+            else
+              percentage += 3600 - seconds[cont][0]
+            end
+          end
+          cont += 1
+        end
+        if day_count == 0
+          percentage_hash[hour] = percentage/3600.0
+        else
+          percentage_hash[hour] += percentage/3600.0
+        end
+        percentage = 0
+        cont = 0
+      end
+      
+      day_count += 1
     end
+    
+    percentage_hash.each_with_index do |hour, index|
+      percentage_hash[index] = (percentage_hash[index]/day_count)*100 
+    end
+    
     percentage_hash
+  end
+
+  def self.average_for_last quantity, day
+    days = Array.new
+    first_day = self.per_day_for day - 1.weeks, day - 1.weeks
+    quantity.times do |cont|
+      days << self.per_day_for(day - (cont+1).weeks, day - (cont+1).week)
+    end
+    days.each do |day|
+      day.each do |hour, percentage|
+        first_day[hour] += percentage
+      end
+    end
+    days.each do |day|
+      day.each do |hour, percentage|
+        first_day[hour] = first_day[hour]/quantity
+      end
+    end
+    first_day
   end
 
 end

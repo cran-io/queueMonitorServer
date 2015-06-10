@@ -93,7 +93,16 @@
     </div>
   </div>
   <div id="comparison-table-container" class="col-md-6 col-xs-12">
-    <%= render partial: 'comparison_table', :locals => { :day_track => @day_track, :selected_date => @date} %>
+    <%= 
+      render partial: 'comparison_table', 
+        :locals => { 
+          day_track: @day_track, 
+            week_track: @week_track,
+            last_5_days: @last_5_days,
+            last_10_days: @last_10_days,
+            selected_date: @date
+        } 
+    %>
   </div>
   <div class="col-md-6 col-xs-12 well">
 

@@ -29,7 +29,16 @@ class TracksController < ApplicationController
 
   def refresh_table
     respond_to do |format|
-      format.html { render partial: 'comparison_table', locals: { day_track: @day_track, selected_date: @date } }  
+      format.html do 
+        render partial: 'comparison_table',
+          locals: { 
+            day_track: @day_track, 
+            week_track: @week_track,
+            last_5_days: @last_5_days,
+            last_10_days: @last_10_days,
+            selected_date: @date
+          }  
+      end
     end
   end
 
@@ -56,7 +65,10 @@ class TracksController < ApplicationController
 
     def set_day_track
       @date = params[:date].nil? ? Time.zone.now.to_date : params[:date].to_date
-      @day_track = Track.per_day_for @date
+      @day_track = Track.per_day_for @date, @date
+      @week_track = Track.per_day_for @date - 7.days, @date
+      @last_5_days = Track.average_for_last 5, Time.zone.now.to_date
+      @last_10_days = Track.average_for_last 10, Time.zone.now.to_date
     end
 
     def parse_an hour
