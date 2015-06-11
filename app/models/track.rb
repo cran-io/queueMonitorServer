@@ -65,16 +65,14 @@ class Track
     days
   end
 
-  def self.per_day_for beg_date, end_date
+  def self.average_by_hour_for beg_date, end_date
     day_hash = Hash.new
     percentage_hash = Hash.new
     days_hash = self.init_days beg_date, end_date
     day_count= 0
-
     days_hash.each do |day, day_hash|
       percentage = 0
       cont = 0
-      
       day_hash.each do |hour, seconds|
         seconds = seconds.to_a
         seconds.each do |key,value|
@@ -88,29 +86,62 @@ class Track
           cont += 1
         end
         if day_count == 0
-          percentage_hash[hour] = percentage/3600.0
+          percentage_hash[hour] = percentage
         else
-          percentage_hash[hour] += percentage/3600.0
+          percentage_hash[hour] += percentage
         end
         percentage = 0
         cont = 0
       end
-      
       day_count += 1
     end
     
     percentage_hash.each_with_index do |hour, index|
-      percentage_hash[index] = (percentage_hash[index]/day_count)*100 
+      percentage_hash[index] = (percentage_hash[index]/3600.0/day_count)*100 
     end
     
     percentage_hash
   end
 
+  def self.average_by_day_for beg_date, end_date
+    result_hash = Hash.new
+    day_hash = Hash.new
+    days_hash = self.init_days beg_date, end_date
+    day_count= 0
+
+    days_hash.each do |day, day_hash|
+      percentage_hash = Hash.new
+      percentage = 0
+      cont = 0
+      day_hash.each do |hour, seconds|
+        seconds = seconds.to_a
+        seconds.each do |key,value|
+          if seconds[cont][1] == true
+            if seconds[cont+1] != nil
+              percentage += seconds[cont+1][0] - seconds[cont][0]
+            else
+              percentage += 3600 - seconds[cont][0]
+            end
+          end
+          cont += 1
+        end
+        
+        percentage_hash[hour] = percentage
+        percentage = 0
+        cont = 0
+      end
+      total = percentage_hash.values.inject{ |a,b| a + b }
+      result_hash.merge!({day => (100*(total/3600.0/14.0)).round(1)})
+      day_count += 1
+    end
+    result_hash
+  end
+
   def self.average_for_last quantity, day
     days = Array.new
-    first_day = self.per_day_for day - 1.weeks, day - 1.weeks
+    first_day = self.average_by_hour_for(day - 1.weeks, day - 1.weeks)
     quantity.times do |cont|
-      days << self.per_day_for(day - (cont+1).weeks, day - (cont+1).week)
+      days << self.average_by_hour_for(day - (cont+1).weeks, day - (cont+1).week)
     end
     days.each do |day|
       day.each do |hour, percentage|
