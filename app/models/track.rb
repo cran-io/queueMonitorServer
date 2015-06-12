@@ -37,7 +37,7 @@ class Track
       end
 
       day = day.sort.to_h
-      24.times do |hour|
+      (8..22).each do |hour|
         if day[hour].nil?
           day.merge!({hour => {0 => last}})
         else
@@ -48,7 +48,7 @@ class Track
       end
 
       if date == right_now.beginning_of_day.to_date
-        24.times do |hour|
+        (8..22).each do |hour|
           right_now = right_now
           if hour == right_now.strftime('%H').to_i
             time_in_seconds = right_now.strftime("%M").to_i*60 + right_now.strftime("%S").to_i
@@ -96,8 +96,8 @@ class Track
       day_count += 1
     end
     
-    percentage_hash.each_with_index do |hour, index|
-      percentage_hash[index] = (percentage_hash[index]/3600.0/day_count)*100 
+    percentage_hash.each do |hour, per|
+      percentage_hash[hour] = (percentage_hash[hour]/3600.0/day_count)*100 
     end
     
     percentage_hash

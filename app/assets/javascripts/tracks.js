@@ -2,12 +2,17 @@
 // All this logic will automatically be available in application.js.
 
 $(document).ready(function(){
-  
+  begin_date = $('#start').val();
+  end_date = $('#end').val();
+  date = $('#stats-datepicker').find('input').val();
+  set_range_percentage_chart(begin_date, end_date);
+  set_table_chart(date);
+  get_day();  
+
   $('.close').click(function(){
     $('#hour-panel-container').hide();
   });
 
-  get_day();
   $('#range-datepicker').datepicker({
       format: 'dd/mm/yyyy',
       language: 'es',
@@ -25,23 +30,56 @@ $(document).ready(function(){
   }).on('hide', function(){
     var date = $('#stats-datepicker').find('input').val();
     refresh_table(date);
+    set_table_chart(date);
   });
 
   $('#filter').click(function(){
     begin_date = $('#start').val();
     end_date = $('#end').val();
-    refresh_chart(begin_date, end_date);
-    refresh_head(begin_date, end_date);
+    refresh_pulse_chart(begin_date, end_date);
+    refresh_pulse_head(begin_date, end_date);
+    set_range_percentage_chart(begin_date, end_date);
   });
 
 
   setInterval(function(){
     begin_date = $('#start').val();
     end_date = $('#end').val();
-    refresh_chart(begin_date, end_date);
+    refresh_pulse_chart(begin_date, end_date);
+    set_range_percentage_chart(begin_date, end_date);
   }, 30000);
   
 });
+
+
+function set_table_chart(date){
+  data = {
+    date: date
+  }
+  $.ajax({
+    type: 'GET',
+    url: '/table_chart_data.json',
+    data: data,
+    success: function(response){
+      line_chart(response, 'table_chart', 'hour');
+    }
+  });
+}
+
+function set_range_percentage_chart(begin_date, end_date){ 
+  data = { 
+    begin_date: begin_date, 
+    end_date: end_date 
+  }
+  $.ajax({
+    type: 'GET',
+    url: '/range_chart_data.json',
+    data: data,
+    success: function(response){
+      line_chart(response, 'range_percentage_chart');
+    }
+  });
+}
 
 function get_day(){
   $('.hour').click(function(){
@@ -77,14 +115,14 @@ function refresh_table(date){
   });
 }
 
-function refresh_chart(begin_date, end_date){
+function refresh_pulse_chart(begin_date, end_date){
   data = { 
     begin_date: begin_date, 
     end_date: end_date 
   };
   $.ajax({
     type: 'GET',
-    url: '/refresh',
+    url: '/refresh_pulse_chart',
     data: data,
     success: function(response){
       $('#days').html(response);
@@ -93,7 +131,7 @@ function refresh_chart(begin_date, end_date){
   });
 }
 
-function refresh_head(begin_date, end_date){
+function refresh_pulse_head(begin_date, end_date){
   $.ajax({
     type: 'GET',
     url: '/refresh_head',

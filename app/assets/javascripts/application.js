@@ -16,3 +16,5 @@
 //= require bootstrap.min
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require d3.min
+//= require nv.d3.min
