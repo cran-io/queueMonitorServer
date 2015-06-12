@@ -1,10 +1,13 @@
 class TracksController < ApplicationController
 	skip_before_action :verify_authenticity_token
-  before_action :set_chart, :only => [:index, :refresh, :refresh_head]
-  before_action :set_day_track, :only => [:index, :refresh_table]
+  before_action :set_range, :only => [:index, :refresh_pulse_chart, :refresh_pulse_head, :range_chart_data]
+  before_action :set_pulse_chart, :only => [:index, :refresh_pulse_chart, :refresh_pulse_head]
+  before_action :set_day_track, :only => [:index, :refresh_table, :table_chart_data]
 
   def index	
-		@tracks = Track.between(Time.zone.now.to_date-10, Time.zone.now.to_date).order('created_at desc').limit 10
+		@tracks = Track.between(Time.zone.now.to_date-10, Time.zone.now.to_date)
+      .order('created_at desc')
+      .limit(10)
   end
 
   def create
@@ -16,13 +19,13 @@ class TracksController < ApplicationController
     end
   end
 
-  def refresh
+  def refresh_pulse_chart
     respond_to do |format|
       format.html { render partial: 'days', locals: { days: @days } }
     end
   end
 
-  def refresh_head
+  def refresh_pulse_head
     respond_to do |format|
       format.html { render partial: 'days_head', locals: { days: @days } }
     end
@@ -50,6 +53,30 @@ class TracksController < ApplicationController
     end
   end
 
+  def range_chart_data
+    @range_percentage_data = [{
+      :label => "Cola cargada", 
+      :area => true,
+      :data => Track.average_by_day_for(@begin_date.to_date, @end_date.to_date)
+    }]
+  end
+
+  def table_chart_data
+    @range_percentage_data = [{
+      :label => @date.strftime('%d/%m'), 
+      :data => @day_track
+    },
+    {
+      :label => "Últimos 5", 
+      :data => @last_5_days
+    },
+    {
+      :label => "Últimos 7 días", 
+      :data => @week_track
+    }
+  ]
+  end
+
   private
   
     def track_params
@@ -58,9 +85,12 @@ class TracksController < ApplicationController
       track_params
     end
 
-    def set_chart  
+    def set_range
       @begin_date = params[:begin_date] || Time.zone.now.to_date - 10
       @end_date = params[:end_date] || Time.zone.now.to_date
+    end
+
+    def set_pulse_chart  
       @days = Track.init_days @begin_date.to_date, @end_date.to_date
     end
 
@@ -69,7 +99,7 @@ class TracksController < ApplicationController
       @day_track = Track.average_by_hour_for @date, @date
       @week_track = Track.average_by_hour_for @date - 7.days, @date
       @last_5_days = Track.average_for_last 5, Time.zone.now.to_date
-      @last_10_days = Track.average_for_last 10, Time.zone.now.to_date
+      # @last_10_days = Track.average_for_last 10, Time.zone.now.to_date
     end
 
     def parse_an hour

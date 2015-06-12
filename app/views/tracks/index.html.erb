@@ -1,4 +1,5 @@
 <% content_for(:head) do %>
+  <%= javascript_include_tag "charts" %>
   <%= javascript_include_tag "tracks" %>
 <% end %>
 
@@ -14,8 +15,11 @@
     <button class="btn btn-sm btn-success col-xs-11 pull-right" id="filter">Filtrar</button>
   </div>
 </div>
-<br>
 <div class="row">
+  <div class="col-xs-12">
+    <h3>Tiempos de cola cargada/descargada </h3>
+    <br>
+  </div>
   <div class="col-xs-1 track-chart-days">
     <%= render partial: 'days_head', locals: { days: @days } %>
   </div>
@@ -70,28 +74,21 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <br>
+    <h3>Porcentajes de tiempo de cola cargada</h3>
+    <br>
+  </div>
+  <div class="col-xs-12">
+    <div id="range_percentage_chart">
+        <svg></svg>
+    </div>
+  </div>
+</div>
 <br>
 
 <div class="row">
-  <div class="col-xs-12">
-    <div class="row">
-      <div class="col-md-3 col-xs-12">
-        <div class="form-horizontal">
-          <div class="form-group">
-            <label for="stat-date" class="col-sm-2 control-label">Fecha</label>
-            <div class="col-sm-10">
-              <div class='input-group date' id='stats-datepicker'>
-                <input type='text' class="form-control datepicker-input" value="<%= @date.strftime("%d/%m/%Y") %>" readonly/>
-                <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div id="comparison-table-container" class="col-md-4 col-xs-12">
     <%= 
       render partial: 'comparison_table', 
@@ -104,7 +101,33 @@
         } 
     %>
   </div>
-  <div class="col-md-8 col-xs-12 well">
-
+  <div class="col-md-8 col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+      <div class="row">
+        <div class="col-md-7 col-xs-12">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label for="stat-date" class="col-sm-5 control-label">Fecha de consulta</label>
+              <div class="col-sm-7">
+                <div class='input-group date' id='stats-datepicker'>
+                  <input type='text' class="form-control datepicker-input" value="<%= @date.strftime("%d/%m/%Y") %>" readonly/>
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-xs-12">
+        <br>
+        <div id="table_chart">
+            <svg></svg>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
