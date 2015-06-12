@@ -98,8 +98,8 @@ class TracksController < ApplicationController
       @date = params[:date].nil? ? Time.zone.now.to_date : params[:date].to_date
       @day_track = Track.average_by_hour_for @date, @date
       @week_track = Track.average_by_hour_for @date - 7.days, @date
-      @last_5_days = Track.average_for_last 5, Time.zone.now.to_date
-      # @last_10_days = Track.average_for_last 10, Time.zone.now.to_date
+      @last_5_days = Track.average_for_last 5, @date
+      # @last_10_days = Track.average_for_last 10, @date
     end
 
     def parse_an hour

@@ -37,7 +37,7 @@ class Track
       end
 
       day = day.sort.to_h
-      (8..22).each do |hour|
+      24.times do |hour|
         if day[hour].nil?
           day.merge!({hour => {0 => last}})
         else
@@ -48,7 +48,7 @@ class Track
       end
 
       if date == right_now.beginning_of_day.to_date
-        (8..22).each do |hour|
+        24.times do |hour|
           right_now = right_now
           if hour == right_now.strftime('%H').to_i
             time_in_seconds = right_now.strftime("%M").to_i*60 + right_now.strftime("%S").to_i
@@ -100,7 +100,7 @@ class Track
       percentage_hash[hour] = (percentage_hash[hour]/3600.0/day_count)*100 
     end
     
-    percentage_hash
+    percentage_hash.select{ |k,v| k >= 8 && k <= 22 }
   end
 
   def self.average_by_day_for beg_date, end_date
@@ -140,20 +140,20 @@ class Track
   def self.average_for_last quantity, day
     days = Array.new
     first_day = self.average_by_hour_for(day - 1.weeks, day - 1.weeks)
+    quantity -= 1
     quantity.times do |cont|
-      days << self.average_by_hour_for(day - (cont+1).weeks, day - (cont+1).week)
+      days << self.average_by_hour_for(day - (cont+2).weeks, day - (cont+2).weeks)
     end
     days.each do |day|
       day.each do |hour, percentage|
         first_day[hour] += percentage
       end
     end
-    days.each do |day|
-      day.each do |hour, percentage|
-        first_day[hour] = first_day[hour]/quantity
-      end
+    first_day.each do |hour, per|
+      first_day[hour] = first_day[hour]/(quantity+1)
     end
-    first_day
+    first_day.select{ |k,v| k >= 8 && k <= 22 }
+
   end
 
 end
